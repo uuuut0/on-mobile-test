@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR網頁範例</title>
+    <title>透過步行的生活體驗計畫</title>
     <style>
         /* CSS樣式 */
         body {
@@ -46,13 +46,14 @@
 
     <!-- 選項頁面 -->
     <div id="options-page">
-        <h1>你希望參與誰？</h1>
+        <h1>這些生活發生在大直周圍</h1>
         <div class="option-block" onclick="showContentPage(1)">
+            <img src="icon.png" alt="圖片icon">
             <h2>提水果的爺爺</h2>
         </div>
         <div class="option-block" onclick="showContentPage(2)">
             <img src="icon.png" alt="圖片icon">
-            <h2>選項2</h2>
+            <h2>紅衣服的奶奶</h2>
         </div>
         <!-- 其他選項區塊 -->
     </div>
@@ -60,7 +61,7 @@
     <!-- 內容頁面 -->
     <div id="content-page">
         <button onclick="closeContentPage()">返回</button>
-        <h1>更深入說明</h1>
+        <h1>一整天的軌跡</h1>
         <div id="option1-content" style="display: none;">
             <!-- 提水果的爺爺的內容 -->
         </div>
