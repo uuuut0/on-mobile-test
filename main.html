@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 添加 viewport meta 标签 -->
+  <style>
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      position: relative;
+      padding: 15px;
+      background-color: #ccc;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .active-tab {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .photo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photo-frame {
+      border: 2px solid #333;
+      padding: 20px;
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+    }
+
+    .photo {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .photo-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .photo-description {
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) { /* 添加响应式 CSS，当屏幕宽度小于等于 600px 时生效 */
+      .photo-frame {
+        padding: 10px; /* 缩小照片外框的 padding */
+      }
+
+      .photo-title {
+        font-size: 20px; /* 缩小照片标题的字体大小 */
+      }
+
+      .photo-description {
+        font-size: 14px; /* 缩小照片描述的字体大小 */
+      }
+    }
+  </style>
+  <script>
+    function showPhoto(photoIndex) {
+      var tabs = document.getElementsByClassName("tab");
+      var photoFrames = document.getElementsByClassName("photo-frame");
+
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active-tab");
+        photoFrames[i].style.display = "none";
+      }
+
+      tabs[photoIndex].classList.add("active-tab");
+      photoFrames[photoIndex].style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <div class="tabs">
+    <div class="tab active-tab" onclick="showPhoto(0)">照片 1</div>
+    <div class="tab" onclick="showPhoto(1)">照片 2</div>
+    <div class="tab" onclick="showPhoto(2)">照片 3</div>
+    <div class="tab" onclick="showPhoto(3)">照片 4</div>
+  </div>
+
+  <div class="photo-container">
+    <div class="photo-frame">
+      <img class="photo" src="https://picsum.photos/600/800?random=1" alt="照片 1">
+      <h3 class="photo-title">照片标题</h3>
+      <p class="photo-description">照片详细说明</p>
+    </div>
+    <div class="photo-frame">
+      <img class="photo" src="https://picsum.photos/600/800?random=2" alt="照片 2">
+      <h3 class="photo-title">照片标题</h3>
+      <p class="photo-description">照片详细说明</p>
+    </div>
+    <div class="photo-frame">
+      <img class="photo" src="https://picsum.photos/600/800?random=3" alt="照片 3">
+      <h3 class="photo-title">照片标题</h3>
+      <p class="photo-description">照片详细说明</p>
+    </div>
+    <div class="photo-frame">
+      <img class="photo" src="https://picsum.photos/600/800?random=4" alt="照片 4">
+      <h3 class="photo-title">照片标题</h3>
+      <p class="photo-description">照片详细说明</p>
+    </div>
+  </div>
+
+  <script>
+    // 默认显示第一张照片
+    showPhoto(0);
+  </script>
+</body>
+</html>
