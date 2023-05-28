@@ -1,120 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 添加 viewport meta 标签 -->
+  <meta charset="UTF-8">
+  <title>步行體驗計畫</title>
   <style>
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f4f4;
+      opacity: 0.8;
+      /* background-image: radial-gradient(#7e83e6 0.5px, #ffffff 0.5px); */
+      background-size: 10px 10px;
     }
-
-    .tab {
-      position: relative;
-      padding: 15px;
-      background-color: #ccc;
-      cursor: pointer;
-      transition: opacity 0.3s ease;
-    }
-
-    .active-tab {
-      background-color: #f00;
-      color: #fff;
-    }
-
-    .photo-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .photo-frame {
-      border: 2px solid #333;
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
       padding: 20px;
-      background-color: #f9f9f9;
-      margin-bottom: 10px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
     }
 
-    .photo {
-      max-width: 100%;
-      height: auto;
+    h2 {
+      font-size: 22px;
+      color: rgb(154, 154, 148);
+      position: relative;
+      z-index: 1;
+      text-align: center; /* 新增 */
+      /* background-color: rgb(52, 52, 52); */
+      padding: 10px;
+      background-image: url(title1.png);
     }
 
-    .photo-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
+
+    .box-container {
+      position: relative;
+      z-index: 0;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background-color: rgb(210, 213, 210);
+      overflow: hidden;
+    }
+    
+    .box {
+      width: 20px;
+      height: 20px;
+      background-color: rgb(213, 213, 53);
+      margin-right: 10px;
+      animation: boxAnimation 5s infinite linear; /* 新增 */
+    }
+    
+    .box2 {
+      width: 20px;
+      height: 20px;
+      background-color: rgb(213, 213, 53);
+      margin-left: 30px;
+      animation: box2Animation 7s infinite; /* 新增 */
     }
 
-    .photo-description {
-      font-size: 16px;
-    }
-
-    @media (max-width: 600px) { /* 添加响应式 CSS，当屏幕宽度小于等于 600px 时生效 */
-      .photo-frame {
-        padding: 10px; /* 缩小照片外框的 padding */
+    @keyframes boxAnimation {
+      0% {
+        margin-right: 10px;
+      }
+      10% {
+        margin-right: 0px;
+      }
+      20% {
+        margin-right: -10px;
+      }
+      60% {
+        margin-right: -30px;
       }
 
-      .photo-title {
-        font-size: 20px; /* 缩小照片标题的字体大小 */
+      100% {
+        margin-right: 10px;
       }
-
-      .photo-description {
-        font-size: 14px; /* 缩小照片描述的字体大小 */
+    }
+    
+    @keyframes box2Animation {
+      0% {
+        margin-left: 30px;
+      }
+      50% {
+        margin-left: -30px;
+      }
+      100% {
+        margin-left: 30px;
       }
     }
   </style>
-  <script>
-    function showPhoto(photoIndex) {
-      var tabs = document.getElementsByClassName("tab");
-      var photoFrames = document.getElementsByClassName("photo-frame");
-
-      for (var i = 0; i < tabs.length; i++) {
-        tabs[i].classList.remove("active-tab");
-        photoFrames[i].style.display = "none";
-      }
-
-      tabs[photoIndex].classList.add("active-tab");
-      photoFrames[photoIndex].style.display = "block";
-    }
-  </script>
 </head>
 <body>
-  <div class="tabs">
-    <div class="tab active-tab" onclick="showPhoto(0)">照片 1</div>
-    <div class="tab" onclick="showPhoto(1)">照片 2</div>
-    <div class="tab" onclick="showPhoto(2)">照片 3</div>
-    <div class="tab" onclick="showPhoto(3)">照片 4</div>
-  </div>
+  <div class="container">
+    
+    <div class="box-container">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    
+    <h1>行走計畫</h1>
 
-  <div class="photo-container">
-    <div class="photo-frame">
-      <img class="photo" src="https://picsum.photos/600/800?random=1" alt="照片 1">
-      <h3 class="photo-title">照片标题</h3>
-      <p class="photo-description">照片详细说明</p>
+    <div class="box-container">
+      <div class="box2"></div>
+      <div class="box2"></div>
+      <div class="box2"></div>
+      <div class="box2"></div>
+      <div class="box2"></div>
     </div>
-    <div class="photo-frame">
-      <img class="photo" src="https://picsum.photos/600/800?random=2" alt="照片 2">
-      <h3 class="photo-title">照片标题</h3>
-      <p class="photo-description">照片详细说明</p>
-    </div>
-    <div class="photo-frame">
-      <img class="photo" src="https://picsum.photos/600/800?random=3" alt="照片 3">
-      <h3 class="photo-title">照片标题</h3>
-      <p class="photo-description">照片详细说明</p>
-    </div>
-    <div class="photo-frame">
-      <img class="photo" src="https://picsum.photos/600/800?random=4" alt="照片 4">
-      <h3 class="photo-title">照片标题</h3>
-      <p class="photo-description">照片详细说明</p>
-    </div>
-  </div>
 
-  <script>
-    // 默认显示第一张照片
-    showPhoto(0);
-  </script>
+    <div class="title-card">
+      <img src="web-title1.png" alt="">
+    </div>
+
+  </div>
 </body>
 </html>
