@@ -1,143 +1,228 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>步行體驗計畫</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f4f4;
-      opacity: 0.8;
-      /* background-image: radial-gradient(#7e83e6 0.5px, #ffffff 0.5px); */
-      background-size: 10px 10px;
-    }
-    
-    .container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
-}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+	<link rel="stylesheet" href="../dist/leaflet-sidepanel.css">
+	<title>Leaflet - Side Panel plugin</title>
+	<style>
+		html,
+		body {
+			margin: 0;
+			font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			height: 100%;
+			color: #1f1412;
+		}
 
-@media screen and (max-width: 600px) {
-  .container {
-    max-width: 400px;
-  }
-}
+		body {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
 
-    
-    h1 {
-      font-size: 9vw;
-      color: #ca2d2d;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
+		.header h1 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 
-    h2 {
-      font-size: 22px;
-      color: rgb(154, 154, 148);
-      position: relative;
-      z-index: 1;
-      text-align: center; /* 新增 */
-      /* background-color: rgb(52, 52, 52); */
-      padding: 10px;
-      background-image: url(title1.png);
-    }
+		.header a {
+			font-size: 16px;
+			color: #199900;
+			text-decoration: none;
+			margin-left: 24px;
+		}
 
+		.header a:hover {
+			color: #116600;
+			text-decoration: underline;
+		}
+		
+		.header a span {
+			margin-left: 4px;
+		}
 
-    .box-container {
-      position: relative;
-      z-index: 0;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      background-color: rgb(210, 213, 210);
-      overflow: hidden;
-    }
+		.header a svg {
+			vertical-align: middle;
+		}
 
-    @media screen and (max-width: 600px) {
-  .container {
-    max-width: 500px;
-    
-  }
-  
-  .box-container {
-    background-color: #ca2d2d;
-  }
-}
+		#map {
+			width: 100%;
+			height: 100vh;
+			border: 1px solid #1f1412;
+		}
 
-    
-    .box {
-      width: 4vw;
-      height: 4vw;
-      background-color: rgb(213, 213, 53);
-      margin-right: 10px;
-      animation: boxAnimation 5s infinite linear; /* 新增 */
-    }
-    
-    .box2 {
-      width: 2vw;
-      height: 2vw;
-      background-color: rgb(213, 213, 53);
-      margin-left: 30px;
-      animation: box2Animation 7s infinite; /* 新增 */
-    }
+		@media all and (min-width: 1024px) {
+			#map {
+				height: 768px;
+				width: 1024px;
+			}
+		}
 
-    @keyframes boxAnimation {
-      0% {
-        margin-right: 10px;
-      }
-      10% {
-        margin-right: 0px;
-      }
-      20% {
-        margin-right: -10px;
-      }
-      60% {
-        margin-right: -30px;
-      }
+		.sidepanel-content {
+			font-size: 1rem;
+		}
 
-      100% {
-        margin-right: 10px;
-      }
-    }
-    
-    @keyframes box2Animation {
-      0% {
-        margin-left: 30px;
-      }
-      50% {
-        margin-left: -30px;
-      }
-      100% {
-        margin-left: 30px;
-      }
-    }
-  </style>
+		.sidepanel-content h4 {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+		.sidepanel-content a {
+			text-decoration: none;
+			font-size: 1rem;
+			color: #199900;
+			transition: color 0.3s ease-in;
+		}
+
+		.sidepanel-content a:hover {
+			color: #116600;
+			text-decoration: underline;
+		}
+	</style>
 </head>
+
 <body>
-  <div class="container">
-    
-    <div class="box-container">
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-    </div>
-    
-    <h1>行走計畫</h1>
+	<header class="header">
+		<h1>walk map[路線地圖] <a href="https://github.com/maxwell-ilai/Leaflet.SidePanel">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+					<path
+						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+				</svg><span>Github</span>
+			</a>
+		</h1>
+	</header>
+	<!-- Map ID -->
+	<div id="map">
+		<div id="mySidepanelRight" class="sidepanel" aria-label="side panel" aria-hidden="false">
+			<div class="sidepanel-inner-wrapper">
+				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
+					<ul class="sidepanel-tabs">
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1">
+								List
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2">
+								Pin
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
+								Mark
+							</a>
+						</li>
 
-    <div class="box-container">
-      <div class="box2"></div>
-      <div class="box2"></div>
-      <div class="box2"></div>
-      <div class="box2"></div>
-      <div class="box2"></div>
-    </div>
+					</ul>
+				</nav>
+				<div class="sidepanel-content-wrapper">
+					<div class="sidepanel-content">
+						<div class="sidepanel-tab-content" data-tab-content="tab-1">
+							<h4>Content 1</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
+								diam.
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper ex sagittis lacus gravida interdum quis sit amet justo. Nunc posuere
+								massa et feugiat efficitur. Donec est magna, lobortis sit amet ligula ut, vehicula posuere diam. Suspendisse aliquet blandit velit, consectetur
+								scelerisque libero porttitor eu. Praesent faucibus dignissim maximus. Vestibulum porta eu tellus sit amet ultricies. Integer aliquet vestibulum
+								massa,
+								in interdum arcu commodo ac. Curabitur sit amet cursus ipsum. Donec ut diam orci. Fusce odio diam, laoreet non elit sed, suscipit mollis leo. Fusce
+								non
+								turpis faucibus, placerat sapien quis, varius ligula. Praesent ac magna id tortor ultricies ultricies quis nec quam.</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-2">
+							<h4>Content 2</h4>
+							<p>Etiam varius in neque a tristique. Maecenas euismod pharetra scelerisque. Nam in pretium nulla, vel blandit risus. Duis posuere egestas nisi, vitae
+								iaculis tortor varius eget. Morbi molestie sem in varius vulputate. Cras enim sapien, malesuada id nisi eu, volutpat congue leo. Praesent aliquet
+								ipsum
+								id lectus consequat rutrum. In vitae dolor pellentesque dolor scelerisque condimentum eget at ligula. Integer vel turpis eros. Cras at hendrerit
+								mauris.
+								Aliquam erat volutpat. Quisque vehicula pharetra mauris, nec finibus augue posuere ut. Etiam condimentum lacus at purus luctus finibus.</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-3">
+							<h4>Content 3</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
+								diam.
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper ex sagittis lacus gravida interdum quis sit amet justo. Nunc posuere
+								massa et feugiat efficitur. Donec est magna, lobortis sit amet ligula ut, vehicula posuere diam. Suspendisse aliquet blandit velit, consectetur
+								scelerisque libero porttitor eu. Praesent faucibus dignissim maximus. Vestibulum porta eu tellus sit amet ultricies. Integer aliquet vestibulum
+								massa,
+								in interdum arcu commodo ac. Curabitur sit amet cursus ipsum. Donec ut diam orci. Fusce odio diam, laoreet non elit sed, suscipit mollis leo. Fusce
+								non
+								turpis faucibus, placerat sapien quis, varius ligula. Praesent ac magna id tortor ultricies ultricies quis nec quam.</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-4">
+							<h4>Content 4</h4>
+							<p>Etiam varius in neque a tristique. Maecenas euismod pharetra scelerisque. Nam in pretium nulla, vel blandit risus. Duis posuere egestas nisi, vitae
+								iaculis tortor varius eget. Morbi molestie sem in varius vulputate. Cras enim sapien, malesuada id nisi eu, volutpat congue leo. Praesent aliquet
+								ipsum
+								id lectus consequat rutrum. In vitae dolor pellentesque dolor scelerisque condimentum eget at ligula. Integer vel turpis eros. Cras at hendrerit
+								mauris.
+								Aliquam erat volutpat. Quisque vehicula pharetra mauris, nec finibus augue posuere ut. Etiam condimentum lacus at purus luctus finibus.</p>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-5">
+							<h4>Content 5</h4>
+							<p>Nam nec lacinia purus, in accumsan arcu. Aenean at maximus tortor, eget porttitor leo. Fusce justo lorem, dictum nec rutrum sed, mattis faucibus
+								diam.
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper ex sagittis lacus gravida interdum quis sit amet justo. Nunc posuere
+								massa et feugiat efficitur. Donec est magna, lobortis sit amet ligula ut, vehicula posuere diam. Suspendisse aliquet blandit velit, consectetur
+								scelerisque libero porttitor eu. Praesent faucibus dignissim maximus. Vestibulum porta eu tellus sit amet ultricies. Integer aliquet vestibulum
+								massa,
+								in interdum arcu commodo ac. Curabitur sit amet cursus ipsum. Donec ut diam orci. Fusce odio diam, laoreet non elit sed, suscipit mollis leo. Fusce
+								non
+								turpis faucibus, placerat sapien quis, varius ligula. Praesent ac magna id tortor ultricies ultricies quis nec quam.</p>
+							<p>Etiam varius in neque a tristique. Maecenas euismod pharetra scelerisque. Nam in pretium nulla, vel blandit risus. Duis posuere egestas nisi, vitae
+								iaculis tortor varius eget. Morbi molestie sem in varius vulputate. Cras enim sapien, malesuada id nisi eu, volutpat congue leo. Praesent aliquet
+								ipsum
+								id lectus consequat rutrum. In vitae dolor pellentesque dolor scelerisque condimentum eget at ligula. Integer vel turpis eros. Cras at hendrerit
+								mauris.
+								Aliquam erat volutpat. Quisque vehicula pharetra mauris, nec finibus augue posuere ut. Etiam condimentum lacus at purus luctus finibus.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sidepanel-toggle-container">
+				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
+			</div>
+		</div>
+	</div>
 
-  </div>
+	<!-- Scripts -->
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+		crossorigin=""></script>
+	<script src="../dist/leaflet-sidepanel.min.js"></script>
+	<script>
+		const map = L.map('map', {
+			zoomControl: false
+		}).setView([25.07939, 121.54508], 18);
+		L.control.scale({
+			position: 'topleft'
+		}).addTo(map);
+		L.control.zoom({
+			position: 'bottomright'
+		}).addTo(map);
+
+		const sidepanelRight = L.control.sidepanel('mySidepanelRight', {
+			panelPosition: 'right',
+			tabsPosition: 'top',
+			pushControls: true,
+			darkMode: false,
+			startTab: 2
+		}).addTo(map);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		L.marker([25.07939, 121.54508]).addTo(map)
+			.bindPopup('A')
+			.openPopup()
+			.bindTooltip('A pretty CSS3 tooltip.<br> Easily customizable.');
+	</script>
 </body>
+
 </html>
