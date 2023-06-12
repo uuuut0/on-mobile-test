@@ -65,9 +65,8 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 
 
 
-var popStart =L.popup({closeButton: false, autoClose: false,offset: [0,-20]})
-
-.setContent(' <h3><span style="font-size:30px">&#9786;</span>由此開始 <span style="font-size:30px">&#8595;</span></h3>')
+var popStart =L.popup({closeButton: false, autoClose: false})
+.setContent('<span style="font-size:30px">&#9786;</span><h3>由此開始</h3>')
 
 
 
