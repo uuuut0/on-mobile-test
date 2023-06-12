@@ -203,10 +203,10 @@
   color: #e7ecf1;
 }
 .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link:active, .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link.active {
-  color: #199900;
+  color: #0d0f0d;
 }
 .sidepanel.sidepanel-dark .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link:active, .sidepanel.sidepanel-dark .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link.active {
-  color: #199900;
+  color: #0c0d0c;
 }
 
 .sidepanel.tabs-top .sidepanel-tabs-wrapper {
@@ -220,11 +220,11 @@
   border-bottom-color: rgba(175, 184, 193, 0.2);
 }
 .sidepanel.tabs-top .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link:active, .sidepanel.tabs-top .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link.active {
-  border-bottom-color: #199900;
+  border-bottom-color: #0e100e;
 }
 
 .sidepanel.sidepanel-dark.tabs-top .sidepanel-tabs-wrapper {
-  box-shadow: inset 0 -1px 0 #202429;
+  box-shadow: inset 0 -1px 0 #266fc8;
 }
 .sidepanel.sidepanel-dark.tabs-top .sidepanel-tabs-wrapper .sidepanel-tabs .sidepanel-tab .sidebar-tab-link:hover {
   border-bottom-color: rgba(175, 184, 193, 0.2);
