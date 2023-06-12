@@ -1,6 +1,6 @@
 const map = L.map('map', {
     zoomControl: false
-}).setView(l1_1[10], 18);
+}).setView(l1_2[10], 18);
 L.control.scale({
     position: 'topleft'
 }).addTo(map);
@@ -17,12 +17,6 @@ const sidepanelRight = L.control.sidepanel('mySidepanelRight', {
 }).addTo(map);
 
 
-var userPos=[25.083849245552813,121.54559165239336];
-// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(map);
-
-// icon style 
 
 var newIcon = L.icon({
     iconUrl: 'style-image/cross.svg',
@@ -56,8 +50,8 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-    L.marker(l1_1[l1_1.length-1],{icon: endIcon}).addTo(map)
-    .bindPopup('<h3>前往 圖書館</h3><p>在此可以找到 (1-2) 路線</p>',{
+    L.marker(l1_1[0],{icon: endIcon}).addTo(map)
+    .bindPopup('<h3>前往 大直市場</h3><p>在此可以找到 (1-3) 路線</p>',{
         autoClose: false,
         autoPan: true
     })
@@ -65,15 +59,14 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 
 
 
-var popStart =L.popup({closeButton: false, autoClose: false,offset: [0,-20]})
-
-.setContent(' <h3><span style="font-size:30px">&#9786;</span>由此開始 <span style="font-size:30px">&#8595;</span></h3>')
-
+var popStart =L.popup({closeButton: false, autoClose: false})
+.setContent('<span style="font-size:30px">&#9786;</span><h3>由此開始</h3>')
 
 
 
 
-var l11 = L.polyline(l1_1, { color: "rgb(0,0,220)" }).addTo(map);
+
+var l12 = L.polyline(l1_2, { color: "rgb(0,0,220)" }).addTo(map);
 
 
     var circleOptions = {
@@ -92,6 +85,9 @@ var l11 = L.polyline(l1_1, { color: "rgb(0,0,220)" }).addTo(map);
     .bindPopup(popStart)
     .openPopup();
     var circle3 = L.circle(l1_1[l1_1.length-1], circleOptions).addTo(map)
+    .bindPopup(popStart)
+    .openPopup();
+
 ;
 
 
